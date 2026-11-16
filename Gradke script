@@ -1,0 +1,26 @@
+# deploy-git
+pipeline {
+    agent {
+        label 'buildagent'
+    }
+
+    tools {
+        gradle 'gradle'
+    }
+
+    stages {
+        stage('build') {
+            steps {
+            deleteDir()
+
+            sh '''
+                git clone https://github.com/Jibin-G-Jiji/gradle-demo.git
+                cd gradle-demo
+                gradle wrapper
+                ./gradlew clean build
+                ls -l build/libs
+            '''
+         }
+     }
+ }
+}
